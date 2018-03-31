@@ -23,9 +23,6 @@ class Mongo {
             throw err;
         }
     }
-    collection(collectionName) {
-        return this.db.collection(collectionName);
-    }
 }
 
 const mongo = new Mongo(config.mongoUrl, config.mongoDb);

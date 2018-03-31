@@ -8,12 +8,12 @@ class MQTTController {
     }
     async listen() {
         try {
-            await this.mqtt.subscribe("#");
+            await this.mqtt.client.subscribe("#");
         } catch (err) {
             log.logError(err);
             throw err;
         }
-        this.mqtt.on("message", async (topic, message) => {
+        this.mqtt.client.on("message", async (topic, message) => {
             let json;
             try {
                 json = JSON.parse(message.toString());
