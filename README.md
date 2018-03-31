@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-ES6 NodeJS worker that subscribes to MQTT topics from [IoT server](https://github.com/mmontes11/iot-server) and sends notifications to [BIoT](https://github.com/mmontes11/biot)
+ES6 NodeJS worker that subscribes to MQTT topics from [IoT server](https://github.com/mmontes11/iot-server) in order to send notifications to [BIoT](https://github.com/mmontes11/biot)
 
 ### Run in development
 
