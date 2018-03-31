@@ -13,6 +13,13 @@ class MQTTController {
             log.logError(err);
         }
         this.mqtt.on("message", async (topic, message) => {
+            let json;
+            try {
+                json = JSON.parse(message.toString());
+            } catch (err) {
+                log.logError(err)
+            }
+            log.logMQTTMessage(topic, json);
             try {
                 await topicModel.upsertTopic(topic)
             } catch (err) {

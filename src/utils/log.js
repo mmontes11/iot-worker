@@ -16,6 +16,13 @@ class Log {
             winston.error(message);
         }
     }
+    logMQTTMessage(topic, json) {
+        this.logInfo(`Message received from topic ${topic}:`);
+        this.logInfo(Log._pretifyJSON(json));
+    }
+    static _pretifyJSON(json) {
+        return JSON.stringify(json, undefined, 2);
+    }
 }
 
 const log = new Log(config.debug);
