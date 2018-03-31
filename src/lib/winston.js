@@ -20,7 +20,7 @@ const logger = new (winston.Logger)({
             timestamp: true,
             json: true,
             colorize: true,
-            db: config.mongoUrl,
+            db: `${config.mongoUrl}/${config.mongoDb}`,
             collection: 'log-iot-worker'
         })
     ]
