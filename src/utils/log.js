@@ -17,7 +17,7 @@ class Log {
         }
     }
     logMQTTMessage(topic, json) {
-        this.logInfo(`Message received from topic ${topic}:`);
+        this.logInfo(`Message received from topic ${topic} :`);
         this.logInfo(Log._pretifyJSON(json));
     }
     static _pretifyJSON(json) {

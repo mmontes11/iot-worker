@@ -5,6 +5,7 @@ class Mongo {
     constructor(url, dbName) {
         this.url = url;
         this.dbName = dbName;
+        this.dbUrl = `${this.url}/${this.dbName}`;
     }
     async connect() {
         try {

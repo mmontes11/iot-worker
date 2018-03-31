@@ -1,6 +1,6 @@
 import winston from 'winston';
 import 'winston-mongodb';
-import config from '../config/index';
+import mongo from '../lib/mongo';
 
 const logger = new (winston.Logger)({
     level: 'info',
@@ -20,7 +20,7 @@ const logger = new (winston.Logger)({
             timestamp: true,
             json: true,
             colorize: true,
-            db: `${config.mongoUrl}/${config.mongoDb}`,
+            db: mongo.dbUrl,
             collection: 'log-iot-worker'
         })
     ]

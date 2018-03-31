@@ -4,26 +4,28 @@ import mqttController from './controllers/mqttController';
 import config from './config/index';
 import log from './utils/log';
 
-const mqttBrokerUrl = `mqtt://${config.mqttBrokerHost}:${config.mqttBrokerPort}`;
-mqtt.on('connect', () => {
-    log.logInfo(`Connected to MQTT Broker ${mqttBrokerUrl}`);
-    mqttController.listen();
+mqtt.on('connect', async () => {
+    log.logInfo(`Connected to MQTT Broker ${mqtt.brokerUrl}`);
+    try {
+        await mqttController.listen();
+    } catch (err) {
+        log.logError(err);
+    }
 });
 mqtt.on('error', (err) => {
-    log.logError(`Error in MQTT Broker ${mqttBrokerUrl}:`);
+    log.logError(`Error in MQTT Broker ${mqtt.brokerUrl}:`);
     log.logError(err);
 });
 mqtt.on('close', () => {
-    log.logInfo(`Disconnected from MQTT Broker ${mqttBrokerUrl}`);
+    log.logInfo(`Disconnected from MQTT Broker ${mqtt.brokerUrl}`);
 });
 
-const mongoUrl = `${config.mongoUrl}/${config.mongoDb}`;
 (async () => {
     try {
         await mongo.connect();
-        log.logInfo(`Connected to MongoDB ${mongoUrl}`);
+        log.logInfo(`Connected to MongoDB ${mongo.dbUrl}`);
     } catch (err) {
-        log.logError(`Error connecting MongoDB ${mongoUrl}:`);
+        log.logError(`Error connecting MongoDB ${mongo.dbUrl}:`);
         log.logError(err);
     }
 })();
@@ -32,9 +34,9 @@ process.on('SIGINT', async () => {
     mqtt.end();
     try {
         await mongo.close();
-        log.logInfo(`Disconnected from MongoDB ${mongoUrl}`);
+        log.logInfo(`Disconnected from MongoDB ${mongo.dbUrl}`);
     } catch (err) {
-        log.logError(`Error disconnecting from MongoDB ${mongoUrl}:`);
+        log.logError(`Error disconnecting from MongoDB ${mongo.dbUrl}:`);
         log.logError(err);
     }
 });

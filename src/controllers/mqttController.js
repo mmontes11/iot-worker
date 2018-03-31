@@ -11,6 +11,7 @@ class MQTTController {
             await this.mqtt.subscribe("#");
         } catch (err) {
             log.logError(err);
+            throw err;
         }
         this.mqtt.on("message", async (topic, message) => {
             let json;
