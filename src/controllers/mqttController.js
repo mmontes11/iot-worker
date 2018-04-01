@@ -14,7 +14,6 @@ class MQTTController {
         try {
             await this.mqtt.client.subscribe("#");
         } catch (err) {
-            log.logError(err);
             throw err;
         }
         this.mqtt.client.on("message", async (topic, message) => {
