@@ -1,5 +1,5 @@
 import mqtt from "../lib/mqtt";
-import { ObservationController } from "./observationController";
+import { EventController, MeasurementController } from "./observationController";
 import topicModel from "../models/topicModel";
 import config from "../config/index";
 import log from "../utils/log";
@@ -7,8 +7,8 @@ import log from "../utils/log";
 class MQTTController {
     constructor(mqtt, eventTopic, measurementTopic) {
         this.mqtt = mqtt;
-        this.eventController = new ObservationController(eventTopic);
-        this.measurementController = new ObservationController(measurementTopic);
+        this.eventController = new EventController(eventTopic);
+        this.measurementController = new MeasurementController(measurementTopic);
     }
     async listen() {
         try {
@@ -32,9 +32,9 @@ class MQTTController {
             }
             try {
                 if (this.eventController.canHandleTopic(topic)) {
-                    this.eventController.handleTopic(topic, json);
+                    await this.eventController.handleTopic(topic, json);
                 } else if (this.measurementController.canHandleTopic(topic)) {
-                    this.measurementController.handleTopic(topic, json);
+                    await this.measurementController.handleTopic(topic, json);
                 }
             } catch (err) {
                 log.logError(err);
