@@ -7,5 +7,7 @@ export default {
     mqttBrokerPort: process.env.MQTT_BROKER_PORT,
     mqttBrokerUsername: process.env.MQTT_BROKER_USERNAME,
     mqttBrokerPassword: process.env.MQTT_BROKER_PASSWORD,
+    eventTopic: process.env.EVENT_TOPIC,
+    measurementTopic: process.env.MEASUREMENT_TOPIC,
     debug: process.env.IOT_DEBUG
 };

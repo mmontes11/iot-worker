@@ -7,5 +7,7 @@ export default {
     mqttBrokerPort: 1883,
     mqttBrokerUsername: undefined,
     mqttBrokerPassword: undefined,
+    eventTopic: 'event',
+    measurementTopic: 'measurement',
     debug: true
 };
