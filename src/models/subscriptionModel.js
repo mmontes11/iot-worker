@@ -8,8 +8,8 @@ class SubscriptionModel {
     collection() {
         return this.mongo.db.collection('subscriptions');
     }
-    getSubscriptionsMatchingByTopic(topic) {
-        return this.collection().find({ topic: topic });
+    find(query = {}) {
+        return this.collection().find(query);
     }
 }
 

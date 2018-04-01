@@ -1,4 +1,5 @@
 import subscriptionModel from "../models/subscriptionModel";
+import matchTopic from "mqtt-match";
 import _ from 'underscore';
 import log from '../utils/log';
 
@@ -11,15 +12,21 @@ export class ObservationController {
     }
     async handleTopic(topic, observation) {
         try {
-            const matchedSubscriptionsCursor = await subscriptionModel.getSubscriptionsMatchingByTopic(topic);
-            const subscriptions = await matchedSubscriptionsCursor.toArray();
-            const notifications = _.map(subscriptions, (subscription) => {
-                return {
-                    chatId: subscription.chatId,
-                    topic,
-                    observation
-                };
-            });
+            let notifications = [];
+            const cursor = subscriptionModel.find();
+            while (await cursor.hasNext()) {
+                const subscription = await cursor.next();
+                const notificationAlreadyExists = _.some(notifications, (notification) => {
+                    return _.isEqual(notification.chatId, subscription.chatId)
+                });
+                if (!notificationAlreadyExists && matchTopic(subscription.topic, topic)) {
+                    notifications.push({
+                        chatId: subscription.chatId,
+                        topic,
+                        observation
+                    });
+                }
+            }
         } catch (err) {
             throw err;
         }
