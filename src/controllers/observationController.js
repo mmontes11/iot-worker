@@ -28,9 +28,16 @@ class ObservationController {
                     });
                 }
             }
-            return notifications;
+            return ObservationController._returnNotifications(notifications, topic);
         } catch (err) {
             throw err;
+        }
+    }
+    static _returnNotifications(notifications, topic) {
+        if (!_.isEmpty(notifications)) {
+            return notifications;
+        } else {
+            throw new Error(`No notifications for topic ${topic}`);
         }
     }
 }
