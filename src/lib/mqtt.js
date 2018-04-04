@@ -8,7 +8,7 @@ class MQTT {
         this.port = port;
         this.username = username;
         this.password = password;
-        this.brokerUrl = `mqtt://${this.host}/${this.port}`
+        this.brokerUrl = `mqtt://${this.host}:${this.port}`
     }
     connect() {
         this.client = mqttLib.connect({
