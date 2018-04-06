@@ -1,16 +1,11 @@
-import subscriptionModel from "../models/subscriptionModel";
 import matchTopic from "mqtt-match";
-import biotClient from '../lib/biotClient';
 import _ from 'underscore';
+import { TopicController} from "./topicController"
+import subscriptionModel from "../models/subscriptionModel";
+import biotClient from '../lib/biotClient';
 import log from '../utils/log';
 
-class ObservationController {
-    constructor(topic) {
-        this.topic = topic;
-    }
-    canHandleTopic(topic) {
-        return topic.includes(this.topic);
-    }
+class ObservationController extends TopicController {
     async getNotifications(topic, observation) {
         try {
             let notifications = [];
@@ -43,9 +38,6 @@ class ObservationController {
 }
 
 class EventController extends ObservationController {
-    constructor(topic) {
-        super(topic);
-    }
     async handleTopic(topic, event) {
         try {
             const notifications = await super.getNotifications(topic, event);
@@ -57,9 +49,6 @@ class EventController extends ObservationController {
 }
 
 class MeasurementController extends ObservationController {
-    constructor(topic) {
-        super(topic);
-    }
     async handleTopic(topic, measurement) {
         try {
             const notifications = await super.getNotifications(topic, measurement);
