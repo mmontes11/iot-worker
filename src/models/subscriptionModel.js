@@ -1,18 +1,12 @@
 import mongo from '../lib/mongo';
-import matchTopic from "mqtt-match";
+import { MongoModel } from "./mongoModel";
 
-class SubscriptionModel {
-    constructor(mongo) {
-        this.mongo = mongo;
-    }
-    collection() {
-        return this.mongo.db.collection('subscriptions');
-    }
+class SubscriptionModel extends MongoModel {
     find(query = {}) {
         return this.collection().find(query);
     }
 }
 
-const subscriptionModel = new SubscriptionModel(mongo);
+const subscriptionModel = new SubscriptionModel(mongo, 'subscriptions');
 
 export default subscriptionModel;

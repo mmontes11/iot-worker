@@ -1,17 +1,12 @@
 import mongo from '../lib/mongo';
+import { MongoModel } from "./mongoModel"
 
-class TopicModel {
-    constructor(mongo) {
-        this.mongo = mongo;
-    }
-    collection() {
-        return this.mongo.db.collection('topics');
-    }
+class TopicModel extends MongoModel {
     upsertTopic(topic) {
         return this.collection().updateOne({ topic }, { $set: { topic } }, { upsert: true });
     }
 }
 
-const topicModel = new TopicModel(mongo);
+const topicModel = new TopicModel(mongo, 'topics');
 
 export default topicModel;
