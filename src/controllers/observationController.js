@@ -8,21 +8,7 @@ import log from '../utils/log';
 class ObservationController extends TopicController {
     async getNotifications(topic, observation) {
         try {
-            let notifications = [];
-            const cursor = subscriptionModel.find();
-            while (await cursor.hasNext()) {
-                const subscription = await cursor.next();
-                const notificationAlreadyExists = _.some(notifications, (notification) => {
-                    return _.isEqual(notification.chatId, subscription.chatId)
-                });
-                if (!notificationAlreadyExists && matchTopic(subscription.topic, topic)) {
-                    notifications.push({
-                        chatId: subscription.chatId,
-                        topic,
-                        observation
-                    });
-                }
-            }
+            const notifications = await subscriptionModel.getNotificationsForSubscriptions(topic, 'observation', observation);
             return ObservationController._returnNotifications(notifications, topic);
         } catch (err) {
             throw err;
@@ -37,7 +23,7 @@ class ObservationController extends TopicController {
     }
 }
 
-class EventController extends ObservationController {
+class EventController extends TopicController {
     async handleTopic(topic, event) {
         try {
             const notifications = await super.getNotifications(topic, event);
@@ -48,7 +34,7 @@ class EventController extends ObservationController {
     }
 }
 
-class MeasurementController extends ObservationController {
+class MeasurementController extends TopicController {
     async handleTopic(topic, measurement) {
         try {
             const notifications = await super.getNotifications(topic, measurement);

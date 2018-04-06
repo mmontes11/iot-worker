@@ -1,9 +1,29 @@
+import _ from 'underscore';
+import matchTopic from "mqtt-match";
 import mongo from '../lib/mongo';
 import { MongoModel } from "./mongoModel";
 
 class SubscriptionModel extends MongoModel {
     find(query = {}) {
         return this.collection().find(query);
+    }
+    async getNotificationsForSubscriptions(topic, notificationExtraFieldKey, notificationExtraField) {
+        let notifications = [];
+        const cursor = subscriptionModel.find();
+        while (await cursor.hasNext()) {
+            const subscription = await cursor.next();
+            const notificationAlreadyExists = _.some(notifications, (notification) => {
+                return _.isEqual(notification.chatId, subscription.chatId)
+            });
+            if (!notificationAlreadyExists && matchTopic(subscription.topic, topic)) {
+                notifications.push({
+                    chatId: subscription.chatId,
+                    topic,
+                    notificationExtraFieldKey: notificationExtraField
+                });
+            }
+        }
+        return notifications
     }
 }
 
