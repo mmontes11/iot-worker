@@ -10,6 +10,7 @@ export default {
     eventTopic: 'event',
     measurementTopic: 'measurement',
     measurementChangeTopic: 'measurementChange',
+    measurementChangePastIntervalInHours: 1,
     biotUrl: 'http://localhost:9090/api',
     biotBasicAuthUsername: 'admin',
     biotBasicAuthPassword: 'admin',

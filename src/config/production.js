@@ -10,6 +10,7 @@ export default {
     eventTopic: process.env.EVENT_TOPIC,
     measurementTopic: process.env.MEASUREMENT_TOPIC,
     measurementChangeTopic: process.env.MEASUREMENT_CHANGE_TOPIC,
+    measurementChangePastIntervalInHours: parseInt(process.env.MEASUREMENT_CHANGE_PAST_INTERVAL_IN_HOURS),
     biotUrl: process.env.BIOT_URL,
     biotBasicAuthUsername: process.env.BIOT_BASIC_AUTH_USERNAME,
     biotBasicAuthPassword: process.env.BIOT_BASIC_AUTH_PASSWORD,

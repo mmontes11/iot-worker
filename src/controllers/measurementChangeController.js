@@ -1,7 +1,7 @@
 import { TopicController } from "./topicController";
 
 export class MeasurementChangeController extends TopicController {
-    async handleTopic(topic, measurement) {
+    async handleTopic(topic, measurementChange) {
 
     }
 }

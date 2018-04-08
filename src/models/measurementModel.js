@@ -2,12 +2,13 @@ import _ from "underscore";
 import { MongoModel } from "./mongoModel";
 import { ObjectID } from 'mongodb';
 import mongo from '../lib/mongo';
+import config from '../config/index';
 
 class Measurement extends MongoModel {
     async getMeasurementGrowthRate(currentMeasurement) {
         const currentObjectId = new ObjectID(currentMeasurement._id);
         const pastDate = new Date();
-        pastDate.setHours(pastDate.getHours() - 1);
+        pastDate.setHours(pastDate.getHours() - config.measurementChangePastIntervalInHours);
         const pipeline = [
             {
                 $match: {
