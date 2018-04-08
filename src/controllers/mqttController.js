@@ -6,11 +6,11 @@ import config from "../config/index";
 import log from "../utils/log";
 
 class MQTTController {
-    constructor(mqtt, eventTopic, measurementTopic) {
+    constructor(mqtt, eventTopic, measurementTopic, measurementChangeTopic) {
         this.mqtt = mqtt;
         this.eventController = new EventController(eventTopic);
-        this.measurementController = new MeasurementController(measurementTopic);
-        this.measurementChangeController = new MeasurementChangeController(measurementTopic);
+        this.measurementController = new MeasurementController(measurementTopic, mqtt);
+        this.measurementChangeController = new MeasurementChangeController(measurementChangeTopic);
     }
     async listen() {
         try {
@@ -26,7 +26,7 @@ class MQTTController {
                 log.logError(err);
                 return;
             }
-            log.logMQTTTopic(topic, json);
+            log.logMQTTTReceivedMessage(topic, json);
 
             let promises = [];
             promises.push(topicModel.upsertTopic(topic));
@@ -48,6 +48,6 @@ class MQTTController {
     }
 }
 
-const mqttController = new MQTTController(mqtt, config.eventTopic, config.measurementTopic);
+const mqttController = new MQTTController(mqtt, config.eventTopic, config.measurementTopic, config.measurementChangeTopic);
 
 export default mqttController;

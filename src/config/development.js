@@ -9,6 +9,7 @@ export default {
     mqttBrokerPassword: undefined,
     eventTopic: 'event',
     measurementTopic: 'measurement',
+    measurementChangeTopic: 'measurementChange',
     biotUrl: 'http://localhost:9090/api',
     biotBasicAuthUsername: 'admin',
     biotBasicAuthPassword: 'admin',

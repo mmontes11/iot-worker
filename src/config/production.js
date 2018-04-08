@@ -9,6 +9,7 @@ export default {
     mqttBrokerPassword: process.env.MQTT_BROKER_PASSWORD,
     eventTopic: process.env.EVENT_TOPIC,
     measurementTopic: process.env.MEASUREMENT_TOPIC,
+    measurementChangeTopic: process.env.MEASUREMENT_CHANGE_TOPIC,
     biotUrl: process.env.BIOT_URL,
     biotBasicAuthUsername: process.env.BIOT_BASIC_AUTH_USERNAME,
     biotBasicAuthPassword: process.env.BIOT_BASIC_AUTH_PASSWORD,

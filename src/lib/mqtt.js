@@ -1,6 +1,7 @@
 import mqttLib from 'async-mqtt';
 import _ from 'underscore';
-import config from '../config/index'
+import config from '../config/index';
+import log from '../utils/log';
 
 class MQTT {
     constructor(host, port, username, password) {
@@ -17,6 +18,10 @@ class MQTT {
             username: this.username,
             password: this.password
         });
+    }
+    publishJSON(topic, json) {
+        log.logMQTTPublish(topic, json);
+        return this.client.publish(topic, JSON.stringify(json));
     }
 }
 

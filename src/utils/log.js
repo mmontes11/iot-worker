@@ -16,8 +16,12 @@ class Log {
             winston.error(message);
         }
     }
-    logMQTTTopic(topic, json) {
+    logMQTTTReceivedMessage(topic, json) {
         this.logInfo(`Message received from topic ${topic} :`);
+        this.logInfo(Log._pretifyJSON(json));
+    }
+    logMQTTPublish(topic, json) {
+        this.logInfo(`Published in topic ${topic} :`);
         this.logInfo(Log._pretifyJSON(json));
     }
     logRequest(request, id) {

@@ -1,4 +1,3 @@
-import matchTopic from "mqtt-match";
 import _ from 'underscore';
 import { TopicController} from "./topicController"
 import subscriptionModel from "../models/subscriptionModel";
@@ -6,7 +5,7 @@ import measurementModel from "../models/measurementModel";
 import measurementChangeModel from "../models/measurementChangeModel";
 import biotClient from '../lib/biotClient';
 import log from '../utils/log';
-import measurement from "../../../iot-server/test/constants/measurement";
+import config from '../config/index';
 
 class ObservationController extends TopicController {
     async getNotifications(topic, observation) {
@@ -38,11 +37,18 @@ class EventController extends ObservationController {
 }
 
 class MeasurementController extends ObservationController {
+    constructor(topic, mqtt) {
+        super(topic);
+        this.mqtt = mqtt;
+    }
+    canHandleTopic(topic) {
+        return super.canHandleTopic(topic) && !topic.includes(config.measurementChangeTopic);
+    }
     async handleTopic(topic, measurement) {
         try {
             await Promise.all([
                 this._sendMeasurementNotifications(topic, measurement),
-                this._processMeasurementChange(measurement)
+                this._processMeasurementChange(topic, measurement)
             ]);
         } catch (err) {
             throw err;
@@ -56,7 +62,7 @@ class MeasurementController extends ObservationController {
             throw err;
         }
     }
-    async _processMeasurementChange(measurement) {
+    async _processMeasurementChange(topic, measurement) {
         try {
             const growthRate = await measurementModel.getMeasurementGrowthRate(measurement);
             if (!_.isUndefined(growthRate)) {
@@ -66,6 +72,9 @@ class MeasurementController extends ObservationController {
                     phenomenonTime: new Date()
                 };
                 await measurementChangeModel.insertOne(measurementChange);
+
+                const measurementChangeTopic = topic.replace(config.measurementTopic, config.measurementChangeTopic);
+                await this.mqtt.publishJSON(measurementChangeTopic, measurementChange);
             }
         } catch (err) {
             throw err;
