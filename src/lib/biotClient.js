@@ -92,6 +92,9 @@ class BiotClient {
     sendMeasurementNotifications(notifications) {
         return this._sendNotifications('measurement/notifications', notifications);
     }
+    sendMeasurementChangeNotifications(notifications) {
+        return this._sendNotifications('measurementChange/notifications', notifications);
+    }
     async _sendNotifications(path, notifications = []) {
         try {
             const postRequest = await this._postWithAccessToken(path, { notifications });

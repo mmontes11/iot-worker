@@ -4,6 +4,7 @@ import subscriptionModel from "../models/subscriptionModel";
 import measurementModel from "../models/measurementModel";
 import measurementChangeModel from "../models/measurementChangeModel";
 import biotClient from '../lib/biotClient';
+import mqtt from '../lib/mqtt';
 import log from '../utils/log';
 import config from '../config/index';
 
@@ -37,10 +38,6 @@ class EventController extends ObservationController {
 }
 
 class MeasurementController extends ObservationController {
-    constructor(topic, mqtt) {
-        super(topic);
-        this.mqtt = mqtt;
-    }
     canHandleTopic(topic) {
         return super.canHandleTopic(topic) && !topic.includes(config.measurementChangeTopic);
     }
@@ -74,7 +71,7 @@ class MeasurementController extends ObservationController {
                 await measurementChangeModel.insertOne(measurementChange);
 
                 const measurementChangeTopic = topic.replace(config.measurementTopic, config.measurementChangeTopic);
-                await this.mqtt.publishJSON(measurementChangeTopic, measurementChange);
+                await mqtt.publishJSON(measurementChangeTopic, measurementChange);
             }
         } catch (err) {
             throw err;

@@ -9,7 +9,7 @@ class MQTTController {
     constructor(mqtt, eventTopic, measurementTopic, measurementChangeTopic) {
         this.mqtt = mqtt;
         this.eventController = new EventController(eventTopic);
-        this.measurementController = new MeasurementController(measurementTopic, mqtt);
+        this.measurementController = new MeasurementController(measurementTopic);
         this.measurementChangeController = new MeasurementChangeController(measurementChangeTopic);
     }
     async listen() {
