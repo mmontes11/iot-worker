@@ -19,7 +19,7 @@ class SubscriptionModel extends MongoModel {
                 notifications.push({
                     chatId: subscription.chatId,
                     topic,
-                    notificationExtraFieldKey: notificationExtraField
+                    [notificationExtraFieldKey]: notificationExtraField
                 });
             }
         }

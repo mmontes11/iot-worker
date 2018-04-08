@@ -23,24 +23,20 @@ class MQTTController {
             try {
                 json = JSON.parse(message.toString());
             } catch (err) {
-                log.logError(err)
+                log.logError(err);
+                return;
             }
             log.logMQTTTopic(topic, json);
 
-            try {
-                await topicModel.upsertTopic(topic)
-            } catch (err) {
-                log.logError(err);
-            }
-
             let promises = [];
+            promises.push(topicModel.upsertTopic(topic));
             if (this.eventController.canHandleTopic(topic)) {
                 promises.push(this.eventController.handleTopic(topic, json));
             }
             if (this.measurementController.canHandleTopic(topic)) {
                 promises.push(this.measurementController.handleTopic(topic, json));
             }
-            if (this.measurementChangeController.canHandle(topic)) {
+            if (this.measurementChangeController.canHandleTopic(topic)) {
                 promises.push(this.measurementChangeController.handleTopic(topic, json));
             }
             try {

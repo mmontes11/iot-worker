@@ -23,7 +23,7 @@ class ObservationController extends TopicController {
     }
 }
 
-class EventController extends TopicController {
+class EventController extends ObservationController {
     async handleTopic(topic, event) {
         try {
             const notifications = await super.getNotifications(topic, event);
@@ -34,7 +34,7 @@ class EventController extends TopicController {
     }
 }
 
-class MeasurementController extends TopicController {
+class MeasurementController extends ObservationController {
     async handleTopic(topic, measurement) {
         try {
             const notifications = await super.getNotifications(topic, measurement);

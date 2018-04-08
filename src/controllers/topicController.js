@@ -2,7 +2,7 @@ export class TopicController {
     constructor(topic) {
         this.topic = topic;
     }
-    canHandle(topic) {
+    canHandleTopic(topic) {
         return topic.includes(this.topic);
     }
 }
