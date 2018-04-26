@@ -4,13 +4,25 @@
 
 ES6 NodeJS worker that subscribes to MQTT topics from [IoT server](https://github.com/mmontes11/iot-server) to send notifications to [BIoT](https://github.com/mmontes11/biot)
 
-### Run in development
+### Development
 
 ```bash
 $ npm start
 ```
 
-### Build image
+### Lint
+
+```bash
+$ npm run lint
+```
+
+### Test and Coverage
+
+```bash
+$ npm test
+```
+
+### Build Image
 
 ```bash
 $ npm run build
@@ -21,6 +33,6 @@ $ docker build -t iot-worker .
 
 Image available on [Docker Hub](https://hub.docker.com/r/mmontes11/iot-worker)
 
-### Run in production
+### Production
 
 See [docker-compose](https://docs.docker.com/compose/) set up on [iot](https://github.com/mmontes11/iot)
