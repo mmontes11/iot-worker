@@ -31,7 +31,8 @@ class Measurement extends MongoModel {
     const aggregationResult = await this.collection()
       .aggregate(pipeline)
       .toArray();
-    const pastAvg = _.first(aggregationResult).avgValue;
+    const firstAggregationResult = _.first(aggregationResult);
+    const pastAvg = !_.isUndefined(firstAggregationResult) ? firstAggregationResult.avgValue : undefined;
     if (!_.isUndefined(pastAvg)) {
       return (currentMeasurement.value - pastAvg) / pastAvg;
     }
