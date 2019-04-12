@@ -14,7 +14,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist/*",
-    "prebuild": "npm run lint && npm run clean",
+    "prebuild": "npm run clean",
     "build": "babel -d dist/ src/",
     "production": "cross-env NODE_ENV=production node index.js"
   },
