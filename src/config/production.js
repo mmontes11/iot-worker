@@ -1,7 +1,7 @@
 export default {
   env: process.env.NODE_ENV,
   nodePort: process.env.NODE_PORT,
-  mongoUrl: `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`,
+  mongoUrl: process.env.MONGO_URL,
   mongoDb: process.env.MONGO_DB,
   mqttBrokerHost: process.env.MQTT_BROKER_HOST,
   mqttBrokerPort: process.env.MQTT_BROKER_PORT,
