@@ -17,5 +17,6 @@ export default {
   biotBasicAuthPassword: process.env.BIOT_BASIC_AUTH_PASSWORD,
   biotUsername: process.env.BIOT_USERNAME,
   biotPassword: process.env.BIOT_PASSWORD,
+  storeLogsInMongo: process.env.STORE_LOGS_IN_MONGO,
   debug: process.env.IOT_DEBUG,
 };
