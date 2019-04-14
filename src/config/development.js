@@ -17,6 +17,5 @@ export default {
   biotBasicAuthPassword: "admin",
   biotUsername: "admin",
   biotPassword: "aA12345678&",
-  storeLogsInMongo: false,
   debug: true,
 };
