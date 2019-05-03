@@ -31,3 +31,6 @@ npm-debug.log*
 
 # Node persist
 .node-persist
+
+# env
+.env
